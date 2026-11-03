@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Portafolio personal: conoce mis habilidades, proyectos y formas de contacto.">
+  <title>Mi portafolio | Inicio</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+  <style>
+    :root {
+      --accent: #6c63ff;
+      --ink: #20213a;
+      --muted: #6d7085;
+      --soft: #f6f6fc;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      color: var(--ink);
+    }
+
+    .navbar {
+      min-height: 4.5rem;
+    }
+
+    .brand-mark {
+      color: var(--accent);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+    .navbar-item.is-active,
+    .navbar-item:hover {
+      color: var(--accent);
+    }
+
+    .hero.is-portfolio {
+      background:
+        radial-gradient(ellipse at 85% 20%, rgba(108, 99, 255, 0.15), transparent 34%),
+        linear-gradient(135deg, #fbfbff 0%, #f2f1ff 100%);
+    }
+
+    .hero.is-portfolio .hero-body {
+      padding-top: 6rem;
+      padding-bottom: 6rem;
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .hero-title {
+      max-width: 12ch;
+      letter-spacing: -0.055em;
+    }
+
+    .hero-copy {
+      max-width: 38rem;
+      color: var(--muted);
+      font-size: 1.15rem;
+      line-height: 1.8;
+    }
+
+    .button.is-accent {
+      background-color: var(--accent);
+      border-color: transparent;
+      color: #fff;
+    }
+
+    .button.is-accent:hover {
+      background-color: #554ce8;
+      color: #fff;
+    }
+
+    .portrait {
+      display: grid;
+      width: min(19rem, 72vw);
+      aspect-ratio: 1;
+      margin: 0 auto;
+      place-items: center;
+      border: 1px solid rgba(108, 99, 255, 0.16);
+      border-radius: 50%;
+      background: linear-gradient(145deg, #e6e4ff, #fff);
+      box-shadow: 0 28px 70px rgba(53, 49, 119, 0.13);
+      color: var(--accent);
+      font-size: 5rem;
+      font-weight: 800;
+      letter-spacing: -0.08em;
+    }
+
+    .section-heading {
+      letter-spacing: -0.04em;
+    }
+
+    .section-copy {
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .soft-section {
+      background-color: var(--soft);
+    }
+
+    .skill-tag {
+      margin: 0.3rem;
+      border: 1px solid #e8e7f4;
+      background: #fff;
+      color: var(--ink);
+      font-size: 0.95rem;
+      padding: 0.75rem 1rem;
+    }
+
+    .project-card {
+      height: 100%;
+      overflow: hidden;
+      border: 1px solid #eeedf5;
+      border-radius: 1rem;
+      box-shadow: 0 12px 35px rgba(32, 33, 58, 0.05);
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 40px rgba(32, 33, 58, 0.1);
+    }
+
+    .project-visual {
+      display: grid;
+      min-height: 12rem;
+      place-items: center;
+      background: linear-gradient(135deg, #e9e7ff, #d9f2f1);
+      color: var(--accent);
+      font-size: 3.5rem;
+      font-weight: 800;
+    }
+
+    .project-visual.is-peach {
+      background: linear-gradient(135deg, #fff0e7, #f4e8ff);
+      color: #c66d55;
+    }
+
+    .project-visual.is-blue {
+      background: linear-gradient(135deg, #e3f1ff, #e8e6ff);
+      color: #4978b8;
+    }
+
+    .contact-box {
+      border-radius: 1.25rem;
+      background: var(--ink);
+      color: #fff;
+    }
+
+    .contact-box .title,
+    .contact-box .subtitle {
+      color: #fff;
+    }
+
+    .contact-box .subtitle {
+      opacity: 0.76;
+    }
+
+    .contact-link {
+      color: #d4d0ff;
+      font-weight: 600;
+    }
+
+    .contact-link:hover {
+      color: #fff;
+    }
+
+    .footer {
+      background: #fff;
+      color: var(--muted);
+    }
+
+    @media (max-width: 768px) {
+      .hero.is-portfolio .hero-body {
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar is-white" aria-label="Navegación principal">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item brand-mark" href="#inicio" aria-label="Ir al inicio">MI PORTAFOLIO</a>
+        <a role="button" class="navbar-burger" aria-label="Abrir menú" aria-expanded="false" data-target="main-nav">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div id="main-nav" class="navbar-menu">
+        <div class="navbar-end">
+          <a class="navbar-item" href="#sobre-mi">Sobre mí</a>
+          <a class="navbar-item" href="#habilidades">Habilidades</a>
+          <a class="navbar-item" href="#proyectos">Proyectos</a>
+          <div class="navbar-item">
+            <a class="button is-accent is-rounded" href="#contacto">Contáctame</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section id="inicio" class="hero is-portfolio">
+      <div class="hero-body">
+        <div class="container">
+          <div class="columns is-vcentered is-variable is-8">
+            <div class="column is-7">
+              <p class="eyebrow mb-4">Hola, soy</p>
+              <h1 class="title is-1 hero-title mb-5">Una persona creativa que construye para la web.</h1>
+              <p class="hero-copy mb-5">
+                Me gusta convertir ideas en experiencias digitales claras, útiles y agradables.
+                Este es un espacio para conocer un poco más sobre mí y mi trabajo.
+              </p>
+              <div class="buttons">
+                <a class="button is-accent is-medium is-rounded" href="#proyectos">Ver mis proyectos</a>
+                <a class="button is-white is-medium is-rounded" href="#sobre-mi">Conocer más</a>
+              </div>
+            </div>
+            <div class="column is-5">
+              <div class="portrait" role="img" aria-label="Iniciales de mi nombre">MP</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sobre-mi" class="section">
+      <div class="container">
+        <div class="columns is-variable is-8 is-vcentered">
+          <div class="column is-4">
+            <p class="eyebrow mb-3">Un poco sobre mí</p>
+            <h2 class="title is-2 section-heading">Ideas con propósito.</h2>
+          </div>
+          <div class="column is-8">
+            <p class="section-copy is-size-5">
+              Soy estudiante y me interesa el diseño y desarrollo de sitios web. Disfruto aprender
+              herramientas nuevas, resolver problemas y trabajar en proyectos donde la tecnología
+              ayude a las personas. En cada proyecto busco cuidar tanto la experiencia como los detalles.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="habilidades" class="section soft-section">
+      <div class="container has-text-centered">
+        <p class="eyebrow mb-3">Lo que estoy aprendiendo</p>
+        <h2 class="title is-2 section-heading mb-5">Mis habilidades</h2>
+        <div class="tags is-centered">
+          <span class="tag is-medium is-rounded skill-tag">HTML</span>
+          <span class="tag is-medium is-rounded skill-tag">CSS</span>
+          <span class="tag is-medium is-rounded skill-tag">Bulma</span>
+          <span class="tag is-medium is-rounded skill-tag">Diseño responsivo</span>
+          <span class="tag is-medium is-rounded skill-tag">Creatividad</span>
+          <span class="tag is-medium is-rounded skill-tag">Trabajo en equipo</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="proyectos" class="section">
+      <div class="container">
+        <div class="has-text-centered mb-6">
+          <p class="eyebrow mb-3">Una selección de mi trabajo</p>
+          <h2 class="title is-2 section-heading">Proyectos destacados</h2>
+          <p class="section-copy">Algunos ejemplos de ideas que he llevado a la web.</p>
+        </div>
+        <div class="columns is-multiline">
+          <div class="column is-4">
+            <article class="card project-card">
+              <div class="project-visual" aria-hidden="true">01</div>
+              <div class="card-content">
+                <p class="title is-4">Página de cafetería</p>
+                <p class="section-copy">Una página cálida y sencilla para presentar un menú y un espacio local.</p>
+                <div class="tags mt-4">
+                  <span class="tag is-light is-rounded">HTML</span>
+                  <span class="tag is-light is-rounded">CSS</span>
+                </div>
+              </div>
+            </article>
+          </div>
+          <div class="column is-4">
+            <article class="card project-card">
+              <div class="project-visual is-peach" aria-hidden="true">02</div>
+              <div class="card-content">
+                <p class="title is-4">Organizador de tareas</p>
+                <p class="section-copy">Una interfaz limpia para organizar pendientes y mantener el enfoque.</p>
+                <div class="tags mt-4">
+                  <span class="tag is-light is-rounded">Diseño UI</span>
+                  <span class="tag is-light is-rounded">Prototipo</span>
+                </div>
+              </div>
+            </article>
+          </div>
+          <div class="column is-4">
+            <article class="card project-card">
+              <div class="project-visual is-blue" aria-hidden="true">03</div>
+              <div class="card-content">
+                <p class="title is-4">Sitio de fotografía</p>
+                <p class="section-copy">Una galería adaptable para destacar imágenes y contar historias visuales.</p>
+                <div class="tags mt-4">
+                  <span class="tag is-light is-rounded">Bulma</span>
+                  <span class="tag is-light is-rounded">Responsive</span>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contacto" class="section soft-section">
+      <div class="container">
+        <div class="contact-box p-6 has-text-centered">
+          <p class="eyebrow mb-3">¿Tienes una idea?</p>
+          <h2 class="title is-2">¡Hablemos!</h2>
+          <p class="subtitle is-5 mb-5">Me encantará conocer tu proyecto o responder tus preguntas.</p>
+          <a class="contact-link is-size-5" href="mailto:hola@ejemplo.com">hola@ejemplo.com</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer py-5">
+    <div class="content has-text-centered">
+      <p>Hecho con <strong>Bulma</strong> · © 2026 Mi portafolio</p>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll(".navbar-burger").forEach((burger) => {
+      burger.addEventListener("click", () => {
+        const menu = document.getElementById(burger.dataset.target);
+        const isActive = burger.classList.toggle("is-active");
+        menu.classList.toggle("is-active", isActive);
+        burger.setAttribute("aria-expanded", String(isActive));
+      });
+    });
+  </script>
+</body>
+</html>

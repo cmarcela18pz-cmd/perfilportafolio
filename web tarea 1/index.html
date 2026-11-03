@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portafolio profesional de C. Marcela, estudiante de Ingeniería en Ciencias de la Computación.">
+  <title>CM | Portafolio profesional</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header" id="inicio">
+    <nav class="nav container" aria-label="Navegación principal">
+      <a class="brand" href="#inicio" aria-label="Inicio de C. Marcela">
+        <span class="brand-mark">CM</span>
+        <span class="brand-name">C. Marcela</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links">
+        <a class="active" href="#inicio">Inicio</a>
+        <a href="#sobre-mi">Sobre mí</a>
+        <a href="#habilidades">Habilidades</a>
+        <a href="#contacto">Contacto</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero container">
+      <div class="hero-copy reveal">
+        <p class="eyebrow">Portafolio personal <span></span> 2026</p>
+        <h1>Construyo ideas con <em>tecnología</em> y propósito.</h1>
+        <p class="hero-text">Soy estudiante de Ingeniería en Ciencias de la Computación, apasionada por aprender, crear soluciones digitales y transformar retos en experiencias funcionales.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#sobre-mi">Conocer mi perfil <span aria-hidden="true">↗</span></a>
+          <a class="button button-quiet" href="#contacto">Hablemos</a>
+        </div>
+        <div class="hero-meta">
+          <span><strong>01</strong> Perfil profesional</span>
+          <span><strong>02</strong> Desarrollo web</span>
+        </div>
+      </div>
+      <div class="hero-visual reveal reveal-delay">
+        <div class="portrait-frame">
+          <div class="portrait-decoration"></div>
+          <img src="perfil.jpg" alt="Fotografía de perfil de C. Marcela" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div class="portrait-fallback" aria-hidden="true">CM</div>
+          <div class="portrait-caption"><span>Disponible para conectar</span><i></i></div>
+        </div>
+        <div class="vertical-label">INGENIERÍA · DESARROLLO · APRENDIZAJE</div>
+      </div>
+    </section>
+
+    <section class="about section container" id="sobre-mi">
+      <div class="section-heading reveal">
+        <p class="eyebrow">01 / Sobre mí</p>
+        <h2>Una mente curiosa detrás del código.</h2>
+      </div>
+      <div class="about-grid">
+        <div class="about-lead reveal">
+          <p class="large-copy">Mi formación académica está guiada por la curiosidad, la disciplina y el deseo constante de crecer en el mundo de la tecnología.</p>
+        </div>
+        <div class="about-body reveal reveal-delay">
+          <p>Tengo mis estudios completos hasta el colegio y actualmente curso la carrera de Ingeniería en Ciencias de la Computación a nivel universitario. Cada proyecto representa una oportunidad para fortalecer mis conocimientos y aportar soluciones claras, útiles y bien estructuradas.</p>
+          <p>Me interesa especialmente el desarrollo web y la construcción de sistemas que combinen una interfaz cuidada con una base técnica sólida. Disfruto aprender nuevas herramientas, trabajar en equipo y convertir una idea inicial en un resultado que pueda ser utilizado por otras personas.</p>
+          <a class="text-link" href="#contacto">Conoce más sobre mi trayectoria <span>→</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="skills section" id="habilidades">
+      <div class="container">
+        <div class="section-heading centered reveal">
+          <p class="eyebrow">02 / Habilidades</p>
+          <h2>Herramientas para convertir<br> ideas en soluciones.</h2>
+        </div>
+        <div class="skills-grid">
+          <article class="skill-card reveal"><span class="skill-number">01</span><div class="skill-icon">&lt;/&gt;</div><h3>Desarrollo web</h3><p>HTML, CSS y JavaScript para crear interfaces funcionales, responsive y con una experiencia clara.</p><div class="skill-tags"><span>HTML</span><span>CSS</span><span>JavaScript</span></div></article>
+          <article class="skill-card reveal reveal-delay"><span class="skill-number">02</span><div class="skill-icon">◌</div><h3>Base de datos</h3><p>Conocimientos para organizar, gestionar y consultar información de forma estructurada y eficiente.</p><div class="skill-tags"><span>Datos</span><span>SQL</span><span>Modelado</span></div></article>
+          <article class="skill-card reveal reveal-delay-2"><span class="skill-number">03</span><div class="skill-icon">{ }</div><h3>Programación</h3><p>Fundamentos de Python y C# para resolver problemas mediante lógica y código mantenible.</p><div class="skill-tags"><span>Python</span><span>C#</span><span>Lógica</span></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact section container" id="contacto">
+      <div class="contact-panel reveal">
+        <div class="contact-copy"><p class="eyebrow">03 / Contacto</p><h2>Hagamos que una buena idea tome forma.</h2><p>Estoy disponible para conversar sobre proyectos, oportunidades de aprendizaje y colaboraciones.</p></div>
+        <div class="contact-details">
+          <a href="https://wa.me/50494582137" target="_blank" rel="noopener noreferrer" class="contact-item"><span class="contact-icon">↗</span><span><small>WhatsApp</small><strong>9458-2137</strong></span></a>
+          <a href="mailto:cmarcela16@gmail.com" class="contact-item"><span class="contact-icon">@</span><span><small>Correo electrónico</small><strong>cmarcela16@gmail.com</strong></span></a>
+          <div class="contact-item"><span class="contact-icon">⌖</span><span><small>Área de interés</small><strong>Desarrollo de software</strong></span></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer container">
+    <p>© <span id="current-year"></span> C. Marcela. Portafolio personal.</p>
+    <div class="footer-links"><a href="https://github.com/cmarcela16/portafolio" target="_blank" rel="noopener noreferrer">Repositorio en GitHub ↗</a><a href="https://cmarcela16.github.io/portafolio/" target="_blank" rel="noopener noreferrer">GitHub Pages ↗</a></div>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Operacional | Enterprise Monitor</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <style>
+      :root {
+        --sidebar-bg: #101828;
+        --sidebar-text: #d7e3ff;
+        --primary: #2563eb;
+        --primary-soft: #dfe9ff;
+        --success: #16a34a;
+        --warning: #f59e0b;
+        --danger: #ef4444;
+        --muted: #667085;
+        --panel: #f8fafc;
+        --border: #e5e7eb;
+        --header-height: 76px;
+      }
+
+      body {
+        background: #eef2f6;
+        color: #111827;
+        font-family: "Segoe UI", Tahoma, sans-serif;
+      }
+
+      .dashboard-shell {
+        min-height: 100vh;
+      }
+
+      .sidebar {
+        background: var(--sidebar-bg);
+        color: var(--sidebar-text);
+        min-height: 100vh;
+        padding: 1.25rem 1rem;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.5rem 0.75rem 1.5rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        margin-bottom: 1rem;
+      }
+
+      .brand-mark {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, #60a5fa, #2563eb);
+        display: grid;
+        place-items: center;
+        font-weight: 700;
+        color: white;
+      }
+
+      .sidebar .nav-link {
+        color: rgba(255, 255, 255, 0.8);
+        border-radius: 12px;
+        padding: 0.75rem 0.9rem;
+        font-weight: 500;
+      }
+
+      .sidebar .nav-link.active,
+      .sidebar .nav-link:hover {
+        color: white;
+        background: rgba(148, 163, 184, 0.15);
+      }
+
+      .sidebar .nav-icon {
+        width: 18px;
+        text-align: center;
+        opacity: 0.9;
+      }
+
+      .main {
+        padding: 1.25rem;
+      }
+
+      .topbar {
+        min-height: var(--header-height);
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(15, 23, 42, 0.04);
+        border-radius: 18px;
+        padding: 1rem 1.25rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .page-title {
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin: 0;
+      }
+
+      .muted {
+        color: var(--muted);
+      }
+
+      .kpi-card {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 1.1rem 1.2rem;
+        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.03);
+      }
+
+      .kpi-card .label {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--muted);
+      }
+
+      .kpi-card .value {
+        font-size: 2rem;
+        font-weight: 800;
+        line-height: 1.2;
+      }
+
+      .trend-up {
+        color: var(--success);
+        background: rgba(22, 163, 74, 0.09);
+      }
+
+      .trend-down {
+        color: var(--danger);
+        background: rgba(239, 68, 68, 0.08);
+      }
+
+      .trend-neutral {
+        color: var(--warning);
+        background: rgba(245, 158, 11, 0.11);
+      }
+
+      .panel {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.03);
+      }
+
+      .panel .panel-header {
+        padding: 1.1rem 1.2rem 0.7rem;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .panel .panel-body {
+        padding: 1.1rem 1.2rem;
+      }
+
+      .legend-dot {
+        width: 10px;
+        height: 10px;
+        display: inline-block;
+        border-radius: 50%;
+        margin-right: 7px;
+      }
+
+      .chart-box {
+        width: 100%;
+        min-height: 280px;
+      }
+
+      .stream-bars {
+        display: flex;
+        align-items: end;
+        height: 200px;
+        gap: 0.7rem;
+      }
+
+      .stream-bars span {
+        flex: 1;
+        border-radius: 10px 10px 0 0;
+        background: linear-gradient(180deg, #93c5fd 0%, #2563eb 100%);
+        min-height: 30px;
+      }
+
+      .donut-wrap {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 180px;
+      }
+
+      .donut-chart {
+        width: 145px;
+        height: 145px;
+        border-radius: 50%;
+        background: conic-gradient(
+          #2563eb 0 58%,
+          #16a34a 58% 78%,
+          #f59e0b 78% 92%,
+          #e5e7eb 92% 100%
+        );
+        position: relative;
+      }
+
+      .donut-chart::after {
+        content: "";
+        position: absolute;
+        inset: 25px;
+        background: white;
+        border-radius: 50%;
+      }
+
+      .donut-center {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        z-index: 1;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .status-badge {
+        font-size: 0.72rem;
+        font-weight: 600;
+        border-radius: 999px;
+        padding: 0.38rem 0.6rem;
+      }
+
+      .table thead th {
+        font-size: 0.78rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--muted);
+        font-weight: 700;
+        background: #f8fafc;
+      }
+
+      .table tbody td {
+        vertical-align: middle;
+      }
+
+      .table td, .table th {
+        border-color: var(--border);
+      }
+
+      .mini-list li {
+        padding: 0.65rem 0;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .mini-list li:last-child {
+        border-bottom: none;
+      }
+
+      .compare-box {
+        background: linear-gradient(135deg, #eef6ff, #f8fafc);
+        border: 1px solid #dbeafe;
+        border-radius: 18px;
+        padding: 1.1rem 1.2rem;
+      }
+
+      .compare-box h5 {
+        font-size: 1rem;
+        font-weight: 700;
+        margin-bottom: 0.6rem;
+      }
+
+      @media (max-width: 992px) {
+        .sidebar {
+          min-height: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dashboard-shell container-fluid p-0">
+      <div class="row g-0">
+        <aside class="col-lg-2 sidebar">
+          <div class="brand">
+            <div class="brand-mark">A</div>
+            <div>
+              <div class="fw-bold">Acme Ops</div>
+              <small class="text-white-50">Control Center</small>
+            </div>
+          </div>
+
+          <nav class="nav flex-column gap-1">
+            <a class="nav-link active" href="#"><span class="nav-icon">◉</span> Dashboard</a>
+            <a class="nav-link" href="#"><span class="nav-icon">▣</span> Transacciones</a>
+            <a class="nav-link" href="#"><span class="nav-icon">◫</span> Servicios</a>
+            <a class="nav-link" href="#"><span class="nav-icon">◎</span> Alertas</a>
+            <a class="nav-link" href="#"><span class="nav-icon">▤</span> Inventario</a>
+            <a class="nav-link" href="#"><span class="nav-icon">◰</span> Reportes</a>
+            <a class="nav-link" href="#"><span class="nav-icon">⚙</span> Configuración</a>
+          </nav>
+
+          <div class="mt-4 p-3 rounded-4 bg-white bg-opacity-10">
+            <div class="small text-white-50 text-uppercase">SLA</div>
+            <div class="fs-4 fw-bold mt-2">99.94%</div>
+            <div class="small text-white-50">Objetivo de servicio</div>
+          </div>
+        </aside>
+
+        <main class="col-lg-10 main">
+          <header class="topbar d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3">
+            <div>
+              <div class="small text-uppercase text-primary fw-bold">Monitor interno</div>
+              <h1 class="page-title">Dashboard operativo</h1>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+              <div class="text-end">
+                <div class="small muted">Hora de actualización</div>
+                <div class="fw-semibold">11 Oct 2026 · 09:40</div>
+              </div>
+              <button class="btn btn-primary rounded-pill px-3">Exportar</button>
+            </div>
+          </header>
+
+          <section class="row g-4 mb-4">
+            <div class="col-md-6 col-xl-3">
+              <div class="kpi-card h-100">
+                <div class="label">Transacciones hoy</div>
+                <div class="value">48,290</div>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                  <span class="badge trend-up px-2 py-1 rounded-pill">+12.8%</span>
+                  <span class="muted small">vs. último día</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-xl-3">
+              <div class="kpi-card h-100">
+                <div class="label">Tasa de éxito</div>
+                <div class="value">98.6%</div>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                  <span class="badge trend-up px-2 py-1 rounded-pill">+0.4%</span>
+                  <span class="muted small">en 24h</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-xl-3">
+              <div class="kpi-card h-100">
+                <div class="label">Tiempo promedio</div>
+                <div class="value">214 ms</div>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                  <span class="badge trend-down px-2 py-1 rounded-pill">-18 ms</span>
+                  <span class="muted small">respuestas</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-xl-3">
+              <div class="kpi-card h-100">
+                <div class="label">Incidencias</div>
+                <div class="value">07</div>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                  <span class="badge trend-neutral px-2 py-1 rounded-pill">+2</span>
+                  <span class="muted small">revisión</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="row g-4 mb-4">
+            <div class="col-xl-8">
+              <div class="panel h-100">
+                <div class="panel-header d-flex justify-content-between align-items-center">
+                  <h3 class="h5 mb-0">Volumen de transacciones</h3>
+                  <div class="d-flex gap-3 small muted">
+                    <span><span class="legend-dot" style="background:#2563eb"></span>Operación</span>
+                    <span><span class="legend-dot" style="background:#cbd5e1"></span>Meta</span>
+                  </div>
+                </div>
+                <div class="panel-body">
+                  <div class="chart-box">
+                    <svg viewBox="0 0 760 260" width="100%" height="100%" preserveAspectRatio="none" aria-label="Volumen de transacciones">
+                      <defs>
+                        <linearGradient id="areaFill" x1="0" x2="0" y1="0" y2="1">
+                          <stop offset="0%" stop-color="#60a5fa" stop-opacity="0.35"/>
+                          <stop offset="100%" stop-color="#60a5fa" stop-opacity="0.02"/>
+                        </linearGradient>
+                      </defs>
+                      <g stroke="#e5e7eb" stroke-width="1">
+                        <line x1="40" y1="20" x2="740" y2="20"/>
+                        <line x1="40" y1="80" x2="740" y2="80"/>
+                        <line x1="40" y1="140" x2="740" y2="140"/>
+                        <line x1="40" y1="200" x2="740" y2="200"/>
+                      </g>
+                      <path d="M40 180 C120 154, 140 140, 180 130 S240 105, 300 120 S360 80, 420 95 S500 60, 560 75 S640 55, 700 50 L700 220 L40 220 Z" fill="url(#areaFill)"/>
+                      <path d="M40 180 C120 154, 140 140, 180 130 S240 105, 300 120 S360 80, 420 95 S500 60, 560 75 S640 55, 700 50" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="round"/>
+                      <g fill="#94a3b8" font-size="11">
+                        <text x="40" y="235">00h</text>
+                        <text x="150" y="235">04h</text>
+                        <text x="260" y="235">08h</text>
+                        <text x="370" y="235">12h</text>
+                        <text x="480" y="235">16h</text>
+                        <text x="590" y="235">20h</text>
+                        <text x="700" y="235">24h</text>
+                      </g>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xl-4">
+              <div class="panel h-100">
+                <div class="panel-header">
+                  <h3 class="h5 mb-0">Distribución de tráfico</h3>
+                </div>
+                <div class="panel-body">
+                  <div class="donut-wrap position-relative">
+                    <div class="donut-chart">
+                      <div class="donut-center">
+                        <div>
+                          <div class="fs-3 fw-bold">82%</div>
+                          <div class="small muted">healthy</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mt-4">
+                    <div class="d-flex justify-content-between small mb-2"><span><span class="legend-dot" style="background:#2563eb"></span>Core API</span><span>58%</span></div>
+                    <div class="d-flex justify-content-between small mb-2"><span><span class="legend-dot" style="background:#16a34a"></span>Batch jobs</span><span>20%</span></div>
+                    <div class="d-flex justify-content-between small mb-2"><span><span class="legend-dot" style="background:#f59e0b"></span>Backups</span><span>14%</span></div>
+                    <div class="d-flex justify-content-between small"><span><span class="legend-dot" style="background:#e5e7eb"></span>Idle</span><span>8%</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="row g-4 mb-4">
+            <div class="col-xl-7">
+              <div class="panel h-100">
+                <div class="panel-header d-flex justify-content-between align-items-center">
+                  <h3 class="h5 mb-0">Últimas transacciones</h3>
+                  <button class="btn btn-sm btn-outline-secondary rounded-pill">Ver todas</button>
+                </div>
+                <div class="panel-body p-0">
+                  <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>Servicio</th>
+                          <th>Cliente</th>
+                          <th>Estado</th>
+                          <th>Importe</th>
+                          <th>Tiempo</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>#TX-48291</td>
+                          <td>Payments</td>
+                          <td>Northstar</td>
+                          <td><span class="status-badge bg-success-subtle text-success">Aprobado</span></td>
+                          <td>$4,850</td>
+                          <td>214 ms</td>
+                        </tr>
+                        <tr>
+                          <td>#TX-48292</td>
+                          <td>Ledger</td>
+                          <td>Jupiter</td>
+                          <td><span class="status-badge bg-warning-subtle text-warning">Revisión</span></td>
+                          <td>$1,280</td>
+                          <td>332 ms</td>
+                        </tr>
+                        <tr>
+                          <td>#TX-48293</td>
+                          <td>Auth</td>
+                          <td>Velocity Inc.</td>
+                          <td><span class="status-badge bg-success-subtle text-success">Aprobado</span></td>
+                          <td>$2,960</td>
+                          <td>189 ms</td>
+                        </tr>
+                        <tr>
+                          <td>#TX-48294</td>
+                          <td>Invoice</td>
+                          <td>Solstice</td>
+                          <td><span class="status-badge bg-danger-subtle text-danger">Fallido</span></td>
+                          <td>$650</td>
+                          <td>502 ms</td>
+                        </tr>
+                        <tr>
+                          <td>#TX-48295</td>
+                          <td>Settlement</td>
+                          <td>BluePeak</td>
+                          <td><span class="status-badge bg-success-subtle text-success">Aprobado</span></td>
+                          <td>$8,340</td>
+                          <td>240 ms</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xl-5">
+              <div class="panel h-100">
+                <div class="panel-header">
+                  <h3 class="h5 mb-0">Alertas y recursos</h3>
+                </div>
+                <div class="panel-body">
+                  <ul class="list-unstyled mini-list mb-0">
+                    <li class="d-flex justify-content-between align-items-center">
+                      <div>
+                        <div class="fw-semibold">API principal</div>
+                        <div class="small muted">Latencia por encima del umbral</div>
+                      </div>
+                      <span class="badge text-bg-warning">Medium</span>
+                    </li>
+                    <li class="d-flex justify-content-between align-items-center">
+                      <div>
+                        <div class="fw-semibold">Sync jobs</div>
+                        <div class="small muted">Reintento de 3 cargas</div>
+                      </div>
+                      <span class="badge text-bg-info">Monitor</span>
+                    </li>
+                    <li class="d-flex justify-content-between align-items-center">
+                      <div>
+                        <div class="fw-semibold">Base de datos</div>
+                        <div class="small muted">Captura de I/O estable</div>
+                      </div>
+                      <span class="badge text-bg-success">OK</span>
+                    </li>
+                    <li class="d-flex justify-content-between align-items-center">
+                      <div>
+                        <div class="fw-semibold">Despliegue</div>
+                        <div class="small muted">Versión 3.8.2 en producción</div>
+                      </div>
+                      <span class="badge text-bg-primary">Stable</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="row g-4 mb-4">
+            <div class="col-lg-6">
+              <div class="panel h-100">
+                <div class="panel-header">
+                  <h3 class="h5 mb-0">Rendimiento por región</h3>
+                </div>
+                <div class="panel-body">
+                  <div class="stream-bars">
+                    <span style="height: 36%"></span>
+                    <span style="height: 55%"></span>
+                    <span style="height: 48%"></span>
+                    <span style="height: 68%"></span>
+                    <span style="height: 75%"></span>
+                    <span style="height: 72%"></span>
+                    <span style="height: 88%"></span>
+                  </div>
+                  <div class="d-flex justify-content-between mt-3 small muted">
+                    <span>NA</span>
+                    <span>LATAM</span>
+                    <span>EU</span>
+                    <span>APAC</span>
+                    <span>ME</span>
+                    <span>AF</span>
+                    <span>Global</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="panel h-100">
+                <div class="panel-header">
+                  <h3 class="h5 mb-0">Procesos críticos</h3>
+                </div>
+                <div class="panel-body">
+                  <div class="compare-box mb-3">
+                    <h5>Enfoque empresarial</h5>
+                    <p class="mb-0 small text-secondary">Se prioriza la exactitud operativa, el monitoreo, los KPIs, los flujos transaccionales y la decisión basada en datos internos.</p>
+                  </div>
+                  <div class="compare-box">
+                    <h5>Comparación con un sitio comercial</h5>
+                    <p class="mb-0 small text-secondary">Un sitio comercial enfatiza branding, conversión, promociones y experiencia del cliente. Un dashboard empresarial se enfoca en funcionalidad, confiabilidad y análisis interno.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+  </body>
+</html>
